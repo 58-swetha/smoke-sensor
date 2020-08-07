@@ -1,30 +1,27 @@
-int buzzer=8;
-int LED=7;
-int flame_sensor=4;
-int flame_detected;
 void setup(){
+    pinMode(A0,INPUT);
+    pinMode(13,OUTPUT);
+    pinMode(12,OUTPUT);
     Serial.begin(9600);
-    pinMode(buzzer,OUTPUT);
-    pinMode(LED,OUTPUT);
-    
-pinMode(flame_sensor,INPUT);
     }
 void loop(){
-    flame_detected=digitalRead(flame_sensor);
-    if(flame_detected==1)
-    {
-        Serial.println("flame detected");
-        digitalWrite(buzzer,LOW);
-        digitalWrite(LED,LOW);
-        delay(2000);
-        digitalWrite(LED,HIGH);
-        delay(2000);
+    int sens=analogRead(A0);
+    if (sens>=220){
+        digitalWrite(13,HIGH);
+        delay(500);
+        digitalWrite(13,LOW);
+        digitalWrite(12,HIGH);
+        delay(500);
+        digitalWrite(12,LOW);
+        digitalWrite(13,HIGH);
+        delay(500);
+        digitalWrite(13,LOW);
+        digitalWrite(12,HIGH);
+        delay(500);
+        digitalWrite(12,LOW);
         }
-    else
-    {
-        Serial.println("no flame detected");
-        digitalWrite(buzzer,HIGH);
-        digitalWrite(LED,LOW);
+    else {
+        digitalWrite(13,LOW);
         }
-    delay(1000);
+    Serial.println(sens);
     }
